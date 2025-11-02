@@ -190,6 +190,8 @@ npm run web     # For web
 - **Gradients**: expo-linear-gradient
 - **Architecture**: MVVM pattern
 - **AI Integration**: Custom Apple Intelligence service (simulation)
+- **Testing**: Jest, React Testing Library, React Native Testing Library
+- **Type Checking**: TypeScript with strict mode
 
 ## 🎨 Design Principles
 
@@ -222,21 +224,108 @@ The app includes realistic sample data demonstrating:
 
 ## 🧪 Testing
 
-To test the MVVM architecture:
+This project includes comprehensive unit tests for the MVVM architecture components, demonstrating the testability benefits of the MVVM pattern.
 
-1. **ViewModels**: Test business logic independently
-```typescript
-const viewModel = useDashboardViewModel();
-expect(viewModel.balance).toBe(expected);
+### Test Coverage
+
+The test suite covers:
+- ✅ **Models**: Transaction, Budget, AIInsight business logic
+- ✅ **ViewModels**: Dashboard, Transactions, Budget, AI Insights hooks
+- ✅ **Services**: Apple Intelligence categorization and insights
+- ✅ **Utilities**: Test helpers and mock data
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode (for development)
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
 ```
 
-2. **Models**: Test data transformations
-```typescript
-const transaction = new TransactionModel(data);
-expect(transaction.getFormattedAmount()).toBe("+$100.00");
+### Test Structure
+
+Tests are organized in the `src/__tests__/` directory:
+
+```
+src/__tests__/
+├── models/
+│   ├── Transaction.test.ts
+│   ├── Budget.test.ts
+│   └── AIInsight.test.ts
+├── viewmodels/
+│   ├── DashboardViewModel.test.ts
+│   ├── TransactionsViewModel.test.ts
+│   ├── BudgetViewModel.test.ts
+│   └── AIInsightsViewModel.test.ts
+├── services/
+│   └── AppleIntelligenceService.test.ts
+└── utils/
+    └── testHelpers.ts
 ```
 
-3. **Views**: Test UI rendering with mock ViewModels
+### Example Tests
+
+**Testing Models:**
+```typescript
+describe('TransactionModel', () => {
+  it('should format expense with negative prefix', () => {
+    const transaction = new TransactionModel({
+      amount: 100,
+      type: 'expense',
+      ...
+    });
+    expect(transaction.getFormattedAmount()).toBe('-$100.00');
+  });
+});
+```
+
+**Testing ViewModels:**
+```typescript
+describe('useDashboardViewModel', () => {
+  it('should calculate balance correctly', async () => {
+    const { result } = renderHook(() => useDashboardViewModel());
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+    });
+
+    expect(result.current.balance).toBe(4805);
+  });
+});
+```
+
+**Testing Services:**
+```typescript
+describe('AppleIntelligenceService', () => {
+  it('should categorize grocery transactions', () => {
+    const result = service.categorizeTransaction('Whole Foods grocery');
+
+    expect(result.categoryId).toBe('4');
+    expect(result.confidence).toBeGreaterThan(0.7);
+  });
+});
+```
+
+### Coverage Thresholds
+
+The project maintains the following coverage thresholds:
+- **Branches**: 70%
+- **Functions**: 70%
+- **Lines**: 70%
+- **Statements**: 70%
+
+### Testing Philosophy
+
+1. **Unit Tests**: Each component is tested in isolation
+2. **Mock Data**: Consistent test data via helpers
+3. **Async Testing**: Proper handling of async operations
+4. **Type Safety**: Full TypeScript support in tests
+5. **Readable Tests**: Clear, descriptive test names
 
 ## 🔐 Security & Privacy
 
