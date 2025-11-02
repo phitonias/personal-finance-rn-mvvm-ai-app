@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Personal Finance MVVM",
+    "slug": "personal-finance-mvvm",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.personalfinance.mvvm",
+      "infoPlist": {
+        "NSAppleEventsUsageDescription": "This app uses Apple Intelligence to provide smart financial insights and categorization."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.personalfinance.mvvm"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
